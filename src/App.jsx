@@ -1,15 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import Card from "./components/Card/Card";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [dimension, setDimension] = useState(5);
+  const [guessStore, setGuessStore] = useState(
+    Array.from({ length: dimension }, () => Array(dimension).fill(null))
+  );
+
+  useEffect(() => {
+    setGuessStore(
+      Array.from({ length: dimension }, () => Array(dimension).fill(null))
+    );
+  }, [dimension]);
+
+  useEffect(() => {
+  
+  }, [guessStore])
+  
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        {guessStore.map((guessRow) => {
+          return (
+            <div style={{ display: "flex", flexDirection: "row", gap: 10 }}>
+              {guessRow.map((guess) => {
+                return <Card />;
+              })}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
         <a href="https://react.dev" target="_blank">
@@ -27,9 +53,9 @@ function App() {
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
-      </p>
+      </p> */}
     </>
-  )
+  );
 }
 
-export default App
+export default App;
