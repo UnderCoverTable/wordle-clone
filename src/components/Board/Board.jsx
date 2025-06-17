@@ -48,6 +48,7 @@ export default function Board({ dimension = 5, todaysWord = [] }) {
                 >
                   <Card
                     key={i}
+                    index={i}
                     guess={currentRow?.row?.[i]}
                     guessStatus={currentRow?.rowStatuses?.[i]}
                   />
