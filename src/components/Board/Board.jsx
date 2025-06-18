@@ -1,8 +1,8 @@
 import { useContext, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import Card from "../Card/Card";
-import { handleBackspace, handleEnter, handleLetter } from "./Helpers";
-import WordleContext from "../../Context/WordleContext";
+import Card from "@/components/Card/Card";
+import { handleBackspace, handleEnter, handleLetter } from "@/Helpers/Helpers";
+import WordleContext from "@/Context/WordleContext";
 
 export default function Board({}) {
   const {

@@ -1,6 +1,6 @@
 // src/context/MyProvider.js
 import { useState } from "react";
-import WordleContext from "./WordleContext";
+import WordleContext from "@/Context/WordleContext";
 
 export default function WordleProvider({ children }) {
   const [guessStore, setGuessStore] = useState({});

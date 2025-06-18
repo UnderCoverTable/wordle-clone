@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import styles from "./Card.module.scss";
-import { colorMap } from "../Constants";
+import styles from "@/components/Card/Card.module.scss";
+import { colorMap } from "@/Helpers/Constants";
 
 export default function Card({ guess = "", guessStatus = null, index = 0 }) {
   return (

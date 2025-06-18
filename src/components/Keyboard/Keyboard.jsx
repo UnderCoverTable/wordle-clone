@@ -1,8 +1,6 @@
-import { BsBackspaceReverseFill } from "react-icons/bs";
-import { PiKeyReturnBold } from "react-icons/pi";
-import Key from "./Key";
 import { useContext } from "react";
-import WordleContext from "../../Context/WordleContext";
+import Key from "./Key";
+import WordleContext from "@/Context/WordleContext";
 
 export default function Keyboard({}) {
   const { guessStore = {} } = useContext(WordleContext);

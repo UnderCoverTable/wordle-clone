@@ -1,9 +1,9 @@
 import { PiKeyReturnBold } from "react-icons/pi";
-import { handleBackspace, handleEnter, handleLetter } from "../Board/Helpers";
+import { handleBackspace, handleEnter, handleLetter } from "@/Helpers/Helpers";
 import { BsBackspaceReverseFill } from "react-icons/bs";
-import { colorMap } from "../Constants";
+import { colorMap } from "@/Helpers/Constants";
 import { useContext, useEffect, useState } from "react";
-import WordleContext from "../../Context/WordleContext";
+import WordleContext from "@/Context/WordleContext";
 
 export default function Key({ letter = "", status = "" }) {
   const {
