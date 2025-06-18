@@ -1,4 +1,8 @@
-export const checkAnswer = ({ guess = [], answer = [] }) => {
+const isWordValid = (word) => {
+  return true;
+};
+
+const checkAnswer = ({ guess = [], answer = [] }) => {
   const statusMap = [];
 
   guess.forEach((letter, index) => {
@@ -18,27 +22,32 @@ export const handleEnter = ({
   answer = [],
   guessStore = {},
   setGuessStore = () => {},
+  setShowError = () => {},
 }) => {
-  const currentGuessingRowIndex = Object.keys(guessStore).find(
-    (key) => !guessStore[key].entered
-  );
+  if (isWordValid(answer)) {
+    const currentGuessingRowIndex = Object.keys(guessStore).find(
+      (key) => !guessStore[key].entered
+    );
 
-  const currentGuessingRow = guessStore[currentGuessingRowIndex];
+    const currentGuessingRow = guessStore[currentGuessingRowIndex];
 
-  if (currentGuessingRow?.row?.every((item) => !!item)) {
-    currentGuessingRow.entered = true;
+    if (currentGuessingRow?.row?.every((item) => !!item)) {
+      currentGuessingRow.entered = true;
 
-    const statusRow = checkAnswer({
-      guess: currentGuessingRow.row,
-      answer: answer,
-    });
-    currentGuessingRow.rowStatuses = statusRow;
-    setGuessStore((prev) => {
-      return {
-        ...prev,
-        [currentGuessingRowIndex]: currentGuessingRow,
-      };
-    });
+      const statusRow = checkAnswer({
+        guess: currentGuessingRow.row,
+        answer: answer,
+      });
+      currentGuessingRow.rowStatuses = statusRow;
+      setGuessStore((prev) => {
+        return {
+          ...prev,
+          [currentGuessingRowIndex]: currentGuessingRow,
+        };
+      });
+    }
+  } else {
+    setShowError(true) 
   }
 };
 
