@@ -1,14 +1,8 @@
 import { motion } from "framer-motion";
 import styles from "./Card.module.scss";
-import { useEffect, useState } from "react";
+import { colorMap } from "../Constants";
 
 export default function Card({ guess = "", guessStatus = null, index = 0 }) {
-  const colorMap = {
-    wrong: "#3a3a3c",
-    maybe: "#b59f3b",
-    correct: "#538d4e",
-  };
-
   return (
     <motion.div
       className={styles.defaultCardBody}

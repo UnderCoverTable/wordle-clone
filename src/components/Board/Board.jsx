@@ -1,12 +1,20 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Card from "../Card/Card";
 import { handleBackspace, handleEnter, handleLetter } from "./Helpers";
+import WordleContext from "../../Context/WordleContext";
 
-export default function Board({ dimension = 5, todaysWord = [] }) {
+export default function Board({}) {
+  const {
+    dimension,
+    todaysWord = [],
+    guessStore = {},
+    setGuessStore = () => {},
+    showError = false,
+    setShowError = () => {},
+  } = useContext(WordleContext);
+
   const focusDivRef = useRef(null);
-  const [guessStore, setGuessStore] = useState({});
-  const [showError, setShowError] = useState(false);
 
   useEffect(() => {
     focusDivRef.current?.focus();
