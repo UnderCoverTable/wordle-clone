@@ -2,13 +2,23 @@ import { motion } from "framer-motion";
 import styles from "@/components/Card/Card.module.scss";
 import { colorMap } from "@/Helpers/Constants";
 
-export default function Card({ guess = "", guessStatus = null, index = 0 }) {
+export default function Card({
+  guess = "",
+  guessStatus = null,
+  index = 0,
+  setPauseInput = () => {},
+}) {
   return (
     <motion.div
       className={styles.defaultCardBody}
       initial={false}
       animate={{ rotateX: guessStatus ? 180 : 0 }}
-      transition={{ duration: 0.6, delay: index * 0.2 }}
+      transition={{ duration: 0.75, delay: index * 0.2 }}
+      onAnimationComplete={() => {
+        setTimeout(() => {
+          setPauseInput(false);
+        }, 250);
+      }}
       style={{
         transformStyle: "preserve-3d",
         perspective: 800,

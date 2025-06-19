@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Card from "@/components/Card/Card";
 import { handleBackspace, handleEnter, handleLetter } from "@/Helpers/Helpers";
@@ -12,7 +12,11 @@ export default function Board({}) {
     setGuessStore = () => {},
     showError = false,
     setShowError = () => {},
+    setHasGameEnded = () => {},
+    hasGameEnded = false,
   } = useContext(WordleContext);
+
+  const [pauseInput, setPauseInput] = useState(false);
 
   const focusDivRef = useRef(null);
 
@@ -34,7 +38,6 @@ export default function Board({}) {
     setGuessStore(updatedStore);
   }, [dimension]);
 
-  // Reset shake after short delay
   useEffect(() => {
     if (showError) {
       const timeout = setTimeout(() => setShowError(false), 600);
@@ -50,6 +53,7 @@ export default function Board({}) {
         tabIndex={0}
         onBlur={() => focusDivRef.current?.focus()}
         onKeyDown={(event) => {
+          if (hasGameEnded || pauseInput) return;
           const letter = event.key;
 
           if (/^[a-zA-Z]$/.test(letter)) {
@@ -57,11 +61,13 @@ export default function Board({}) {
           } else if (letter === "Backspace") {
             handleBackspace({ guessStore, setGuessStore });
           } else if (letter === "Enter") {
+            setPauseInput(true);
             handleEnter({
               answer: todaysWord,
               guessStore,
               setGuessStore,
               setShowError,
+              setHasGameEnded,
             });
           }
         }}
@@ -86,10 +92,15 @@ export default function Board({}) {
               style={{ display: "flex", flexDirection: "row", gap: 12 }}
               animate={
                 showError && currentActiveRowIndex
-                  ? { x: [0, -10, 10, -10, 10, 0] }
+                  ? { x: [0, -5, 5, -5, 5, 0] }
                   : { x: 0 }
               }
-              transition={{ duration: 0.4 }}
+              transition={{ duration: 0.25 }}
+              onAnimationComplete={() => {
+                setTimeout(() => {
+                  setPauseInput(false);
+                }, 250);
+              }}
             >
               {currentRow.row.map((_, i) => (
                 <Card
@@ -97,6 +108,7 @@ export default function Board({}) {
                   index={i}
                   guess={currentRow?.row?.[i]}
                   guessStatus={currentRow?.rowStatuses?.[i]}
+                  setPauseInput={setPauseInput}
                 />
               ))}
             </motion.div>

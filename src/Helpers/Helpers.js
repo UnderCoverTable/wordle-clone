@@ -1,4 +1,5 @@
-const isWordValid = (word) => {
+const isWordValid = ({ answer = [], guess = [] }) => {
+  if (guess.filter((item) => item).length < answer.length) return false;
   return true;
 };
 
@@ -23,14 +24,14 @@ export const handleEnter = ({
   guessStore = {},
   setGuessStore = () => {},
   setShowError = () => {},
+  setHasGameEnded = () => {},
 }) => {
-  if (isWordValid(answer)) {
-    const currentGuessingRowIndex = Object.keys(guessStore).find(
-      (key) => !guessStore[key].entered
-    );
+  const currentGuessingRowIndex = Object.keys(guessStore).find(
+    (key) => !guessStore[key].entered
+  );
+  const currentGuessingRow = guessStore[currentGuessingRowIndex];
 
-    const currentGuessingRow = guessStore[currentGuessingRowIndex];
-
+  if (isWordValid({ answer, guess: currentGuessingRow?.row })) {
     if (currentGuessingRow?.row?.every((item) => !!item)) {
       currentGuessingRow.entered = true;
 
@@ -45,9 +46,12 @@ export const handleEnter = ({
           [currentGuessingRowIndex]: currentGuessingRow,
         };
       });
+      if (statusRow.every((status) => status === "correct")) {
+        setHasGameEnded(true);
+      }
     }
   } else {
-    setShowError(true) 
+    setShowError(true);
   }
 };
 

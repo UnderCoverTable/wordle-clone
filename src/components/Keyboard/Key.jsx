@@ -11,6 +11,8 @@ export default function Key({ letter = "", status = "" }) {
     guessStore = {},
     setGuessStore = () => {},
     setShowError = () => {},
+    setHasGameEnded = () => {},
+    hasGameEnded = false,
   } = useContext(WordleContext);
 
   const [delayedStatus, setDelayedStatus] = useState("");
@@ -33,12 +35,7 @@ export default function Key({ letter = "", status = "" }) {
           <PiKeyReturnBold size={26} style={{ transform: "scaleX(-1)" }} />
         );
       case "Backspace":
-        return (
-          <BsBackspaceReverseFill
-            size={22}
-            style={{ transform: "scaleX(-1)" }}
-          />
-        );
+        return <BsBackspaceReverseFill size={22} />;
     }
   };
 
@@ -56,6 +53,8 @@ export default function Key({ letter = "", status = "" }) {
         transition: "background-color 0.3s ease",
       }}
       onClick={() => {
+        if (hasGameEnded) return;
+
         if (isRegularLetter) {
           handleLetter({ letter, guessStore, setGuessStore });
         } else if (letter === "Enter") {
@@ -64,6 +63,7 @@ export default function Key({ letter = "", status = "" }) {
             guessStore,
             setGuessStore,
             setShowError,
+            setHasGameEnded,
           });
         } else if (letter === "Backspace") {
           handleBackspace({ guessStore, setGuessStore });

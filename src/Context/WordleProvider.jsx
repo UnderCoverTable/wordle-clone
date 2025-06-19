@@ -6,6 +6,7 @@ export default function WordleProvider({ children }) {
   const [guessStore, setGuessStore] = useState({});
   const [dimension, setDimension] = useState(5);
   const [showError, setShowError] = useState(false);
+  const [hasGameEnded, setHasGameEnded] = useState(false)
 
   const todaysWord = ["h", "e", "l", "l", "o"];
 
@@ -19,6 +20,8 @@ export default function WordleProvider({ children }) {
         showError,
         setShowError,
         todaysWord,
+        hasGameEnded,
+        setHasGameEnded
       }}
     >
       {children}
