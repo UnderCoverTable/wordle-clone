@@ -13,6 +13,7 @@ export default function Key({ letter = "", status = "" }) {
     setShowError = () => {},
     setHasGameEnded = () => {},
     hasGameEnded = false,
+    validWords = [],
   } = useContext(WordleContext);
 
   const [delayedStatus, setDelayedStatus] = useState("");
@@ -64,6 +65,7 @@ export default function Key({ letter = "", status = "" }) {
             setGuessStore,
             setShowError,
             setHasGameEnded,
+            validWords,
           });
         } else if (letter === "Backspace") {
           handleBackspace({ guessStore, setGuessStore });

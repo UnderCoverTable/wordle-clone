@@ -1,6 +1,10 @@
-const isWordValid = ({ answer = [], guess = [] }) => {
-  if (guess.filter((item) => item).length < answer.length) return false;
-  return true;
+const isWordValid = ({ dimension = 5, guess = [], validWords = [] }) => {
+  if (guess.filter((item) => item).length < dimension) return false;
+  if (validWords.includes(guess.join(""))) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 const checkAnswer = ({ guess = [], answer = [] }) => {
@@ -25,13 +29,20 @@ export const handleEnter = ({
   setGuessStore = () => {},
   setShowError = () => {},
   setHasGameEnded = () => {},
+  validWords = [],
 }) => {
   const currentGuessingRowIndex = Object.keys(guessStore).find(
     (key) => !guessStore[key].entered
   );
   const currentGuessingRow = guessStore[currentGuessingRowIndex];
 
-  if (isWordValid({ answer, guess: currentGuessingRow?.row })) {
+  if (
+    isWordValid({
+      dimension: answer?.length,
+      guess: currentGuessingRow?.row,
+      validWords,
+    })
+  ) {
     if (currentGuessingRow?.row?.every((item) => !!item)) {
       currentGuessingRow.entered = true;
 

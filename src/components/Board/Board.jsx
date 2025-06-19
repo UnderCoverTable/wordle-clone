@@ -7,6 +7,7 @@ import WordleContext from "@/Context/WordleContext";
 export default function Board({}) {
   const {
     dimension,
+    setDimension,
     todaysWord = [],
     guessStore = {},
     setGuessStore = () => {},
@@ -14,29 +15,17 @@ export default function Board({}) {
     setShowError = () => {},
     setHasGameEnded = () => {},
     hasGameEnded = false,
+    validWords = [],
   } = useContext(WordleContext);
 
   const [pauseInput, setPauseInput] = useState(false);
 
   const focusDivRef = useRef(null);
+  const options = Array.from({ length: 6 }, (_, i) => i + 3); // 3 to 16
 
   useEffect(() => {
     focusDivRef.current?.focus();
   }, []);
-
-  useEffect(() => {
-    const updatedStore = {};
-
-    for (let i = 0; i < dimension; i++) {
-      updatedStore[i] = {
-        entered: false,
-        row: Array(dimension).fill(null),
-        rowStatuses: Array(dimension).fill(null),
-      };
-    }
-
-    setGuessStore(updatedStore);
-  }, [dimension]);
 
   useEffect(() => {
     if (showError) {
@@ -47,6 +36,16 @@ export default function Board({}) {
 
   return (
     <div>
+      <select
+        value={dimension}
+        onChange={(e) => setDimension(Number(e.target.value))}
+      >
+        {options.map((len) => (
+          <option key={len} value={len}>
+            {len}-letter word
+          </option>
+        ))}
+      </select>
       {/* Invisible input trap */}
       <div
         ref={focusDivRef}
@@ -68,6 +67,7 @@ export default function Board({}) {
               setGuessStore,
               setShowError,
               setHasGameEnded,
+              validWords,
             });
           }
         }}
@@ -99,7 +99,7 @@ export default function Board({}) {
               onAnimationComplete={() => {
                 setTimeout(() => {
                   setPauseInput(false);
-                }, 250);
+                }, 100);
               }}
             >
               {currentRow.row.map((_, i) => (

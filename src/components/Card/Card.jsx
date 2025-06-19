@@ -17,7 +17,7 @@ export default function Card({
       onAnimationComplete={() => {
         setTimeout(() => {
           setPauseInput(false);
-        }, 250);
+        }, 100);
       }}
       style={{
         transformStyle: "preserve-3d",
