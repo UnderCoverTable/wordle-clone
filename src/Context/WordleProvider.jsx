@@ -3,12 +3,12 @@ import WordleContext from "@/Context/WordleContext";
 
 export default function WordleProvider({ children }) {
   const [guessStore, setGuessStore] = useState({});
-  const [dimension, setDimension] = useState(5);
+  const [dimension, setDimension] = useState(3);
   const [showError, setShowError] = useState(false);
   const [hasGameEnded, setHasGameEnded] = useState(false);
   const [validWords, setValidWords] = useState([]);
+  const [showAlert, setShowAlert] = useState(null);
   const [todaysWord, setTodaysWord] = useState(["W", "O", "R", "D", "L"]);
-  console.log('todaysWord: ', todaysWord);
 
   useEffect(() => {
     const updatedStore = {};
@@ -53,6 +53,8 @@ export default function WordleProvider({ children }) {
         hasGameEnded,
         setHasGameEnded,
         validWords,
+        showAlert,
+        setShowAlert,
       }}
     >
       {children}

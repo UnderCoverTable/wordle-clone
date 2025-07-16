@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Card from "@/components/Card/Card";
 import { handleBackspace, handleEnter, handleLetter } from "@/Helpers/Helpers";
 import WordleContext from "@/Context/WordleContext";
+import { MAX_LEN_WORD, MIN_LEN_WORD } from "@/Helpers/Constants";
 
 export default function Board({}) {
   const {
@@ -19,9 +20,12 @@ export default function Board({}) {
   } = useContext(WordleContext);
 
   const [pauseInput, setPauseInput] = useState(false);
-
   const focusDivRef = useRef(null);
-  const options = Array.from({ length: 6 }, (_, i) => i + 3); // 3 to 16
+
+  const options = Array.from(
+    { length: MAX_LEN_WORD - MIN_LEN_WORD + 1 },
+    (_, i) => i + MIN_LEN_WORD
+  );
 
   useEffect(() => {
     focusDivRef.current?.focus();
@@ -36,16 +40,29 @@ export default function Board({}) {
 
   return (
     <div>
+      <div style={{marginBottom: 20}}>
+        <label style={{ display: "block", marginBottom: 8, fontWeight: "500", fontSize: 13, color: "grey" }}>
+        Select Word Length
+      </label>
       <select
         value={dimension}
         onChange={(e) => setDimension(Number(e.target.value))}
+        style={{
+          padding: "8px 12px",
+          borderRadius: "6px",
+          border: "1px solid #ccc",
+          boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+          width: "100%",
+          fontSize: "14px",
+        }}
       >
         {options.map((len) => (
           <option key={len} value={len}>
-            {len}-letter word
+            {len} letter word
           </option>
         ))}
       </select>
+      </div>
       {/* Invisible input trap */}
       <div
         ref={focusDivRef}

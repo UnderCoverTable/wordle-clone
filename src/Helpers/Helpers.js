@@ -57,7 +57,10 @@ export const handleEnter = ({
           [currentGuessingRowIndex]: currentGuessingRow,
         };
       });
-      if (statusRow.every((status) => status === "correct")) {
+      if (
+        statusRow.every((status) => status === "correct") ||
+        currentGuessingRowIndex == answer?.length - 1
+      ) {
         setHasGameEnded(true);
       }
     }
@@ -76,14 +79,8 @@ export const handleBackspace = ({
 
   const currentGuessingRow = guessStore[currentGuessingRowIndex];
 
-  const lastStringIndex = currentGuessingRow.row.reduceRight(
-    (acc, item, index) => {
-      if (acc === -1 && typeof item === "string") {
-        return index;
-      }
-      return acc;
-    },
-    -1
+  const lastStringIndex = currentGuessingRow.row.findLastIndex(
+    (str) => typeof str === "string"
   );
 
   if (lastStringIndex >= 0) {
@@ -121,4 +118,8 @@ export const handleLetter = ({
       };
     });
   }
+};
+
+export const capitalise = (str = "") => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 };
