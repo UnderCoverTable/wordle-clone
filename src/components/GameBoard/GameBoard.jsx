@@ -6,8 +6,14 @@ import CustomAlert from "../CustomAlert/CustomAlert.jsx";
 import { capitalise } from "@/Helpers/Helpers";
 
 export default function GameBoard() {
-  const { hasGameEnded, guessStore, todaysWord, showAlert, setShowAlert } =
-    useContext(WordleContext);
+  const {
+    hasGameEnded,
+    guessStore,
+    todaysWord,
+    showAlert,
+    setShowAlert,
+    dimension,
+  } = useContext(WordleContext);
 
   useEffect(() => {
     if (hasGameEnded) {
@@ -32,11 +38,15 @@ export default function GameBoard() {
         alignItems: "center",
         height: "100vh",
         gap: "32px",
+        ...(dimension >= 6
+          ? {
+              transform: "scale(0.8)",
+              transformOrigin: "top center",
+            }
+          : {}),
       }}
     >
-      <div>
-        {!!showAlert && <CustomAlert message={showAlert}  />}
-      </div>
+      <div>{!!showAlert && <CustomAlert message={showAlert} />}</div>
       <Board />
       <Keyboard />
     </div>
