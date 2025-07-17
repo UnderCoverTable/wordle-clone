@@ -38,30 +38,43 @@ export default function Board({}) {
     }
   }, [showError]);
 
+  const disableWordLengthSelect = Object.values(guessStore).some((item) => {
+    return item.entered;
+  });
+
   return (
     <div>
-      <div style={{marginBottom: 20}}>
-        <label style={{ display: "block", marginBottom: 8, fontWeight: "500", fontSize: 13, color: "grey" }}>
-        Select Word Length
-      </label>
-      <select
-        value={dimension}
-        onChange={(e) => setDimension(Number(e.target.value))}
-        style={{
-          padding: "8px 12px",
-          borderRadius: "6px",
-          border: "1px solid #ccc",
-          boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
-          width: "100%",
-          fontSize: "14px",
-        }}
-      >
-        {options.map((len) => (
-          <option key={len} value={len}>
-            {len} letter word
-          </option>
-        ))}
-      </select>
+      <div style={{ marginBottom: 20 }}>
+        <label
+          style={{
+            display: "block",
+            marginBottom: 8,
+            fontWeight: "500",
+            fontSize: 13,
+            color: "grey",
+          }}
+        >
+          Select Word Length
+        </label>
+        <select
+          value={dimension}
+          onChange={(e) => setDimension(Number(e.target.value))}
+          disabled={disableWordLengthSelect}
+          style={{
+            padding: "8px 12px",
+            borderRadius: "6px",
+            border: "1px solid #ccc",
+            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
+            width: "100%",
+            fontSize: "14px",
+          }}
+        >
+          {options.map((len) => (
+            <option key={len} value={len}>
+              {len} letter word
+            </option>
+          ))}
+        </select>
       </div>
       {/* Invisible input trap */}
       <div

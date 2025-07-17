@@ -4,6 +4,7 @@ import WordleContext from "@/Context/WordleContext";
 
 export default function Keyboard({}) {
   const { guessStore = {} } = useContext(WordleContext);
+  console.log('guessStore: ', guessStore);
 
   const letters = [
     ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
@@ -19,6 +20,7 @@ export default function Keyboard({}) {
       });
     }
   });
+  console.log('enteredRows: ', enteredRows);
 
   return (
     <div
