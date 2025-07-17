@@ -4,7 +4,7 @@ import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/wordle-clone/",
+  base: '/wordle-clone',
   plugins: [react()],
   resolve: {
     alias: {
