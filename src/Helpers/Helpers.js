@@ -1,6 +1,7 @@
 const isWordValid = ({ dimension = 5, guess = [], validWords = [] }) => {
-  if (guess.filter((item) => item).length < dimension) return false;
-  if (validWords.includes(guess.join(""))) {
+  const formattedGuess = guess.map((l) => l.toLowerCase());
+  if (formattedGuess.filter((item) => item).length < dimension) return false;
+  if (validWords.includes(formattedGuess.join(""))) {
     return true;
   } else {
     return false;
